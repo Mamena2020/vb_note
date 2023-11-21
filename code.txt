@@ -1,0 +1,108 @@
+Dim colors As Collection
+
+Dim startDataRow As Integer
+Dim lastDataRow As Long
+
+Sub BtnReport()
+    Set dataSheet = Sheets("Data")
+    Set colors = New Collection
+
+    startDataRow = 4
+    lastDataRow = dataSheet.Cells(dataSheet.Rows.Count, "B").End(xlUp).Row
+
+
+    Dim line As Long
+    Dim color As String
+    Dim colorCount As Integer
+
+    For line = startDataRow To lastDataRow
+        color = dataSheet.Cells(line, "B").Value
+        
+        If color <> "" Then
+          If ColorExists(color) Then
+            ' Jika warna sudah ada di Collection, tingkatkan jumlahnya
+            IncreaseColorCount color
+            Else
+                ' Jika warna belum ada, tambahkan ke Collection dengan jumlah 1
+                AddNewColor color
+            End If
+        End If
+        
+      
+    Next line
+
+    ' Tampilkan hasil di Immediate Window (Ctrl + G untuk membuka Immediate Window)
+    PrintColorCounts
+    PrintReport
+End Sub
+
+Sub AddNewColor(color As String)
+    ' Menambahkan warna baru ke dalam Collection dengan jumlah 1
+    Dim colorInfo As New Dictionary
+    colorInfo.Add "Color", color
+    colorInfo.Add "Count", 1
+    colors.Add colorInfo
+End Sub
+
+Sub IncreaseColorCount(color As String)
+    ' Meningkatkan jumlah warna yang sudah ada di dalam Collection
+    Dim i As Integer
+    For i = 1 To colors.Count
+        Dim colorInfo As Dictionary
+        Set colorInfo = colors(i)
+        If colorInfo("Color") = color Then
+            colorInfo("Count") = colorInfo("Count") + 1
+            Exit Sub
+        End If
+    Next i
+End Sub
+
+Function ColorExists(color As String) As Boolean
+    ' Memeriksa apakah warna sudah ada di dalam Collection
+    Dim i As Integer
+    For i = 1 To colors.Count
+        Dim colorInfo As Dictionary
+        Set colorInfo = colors(i)
+        If colorInfo("Color") = color Then
+            ColorExists = True
+            Exit Function
+        End If
+    Next i
+    ColorExists = False
+End Function
+
+Sub PrintColorCounts()
+    ' Menampilkan hasil count warna di Immediate Window
+    Dim i As Integer
+    For i = 1 To colors.Count
+        Dim colorInfo As Dictionary
+        Set colorInfo = colors(i)
+        Debug.Print colorInfo("Color") & ": " & colorInfo("Count")
+    Next i
+End Sub
+
+Sub PrintReport()
+
+    Dim reportCountRow As Integer
+    reportCountRow = 4
+    Dim i As Integer
+    
+    Set reportSheet = Sheets("Report")
+    
+    For i = 1 To colors.Count
+        Dim colorInfo As Dictionary
+        Set colorInfo = colors(i)
+        
+        reportSheet.Cells(reportCountRow, "B").Value = colorInfo("Color")
+        reportSheet.Cells(reportCountRow, "C").Value = colorInfo("Count")
+        reportCountRow = reportCountRow + 1
+    Next i
+End Sub
+
+
+Sub Testing()
+Debug.Print "Hello"
+ 
+
+End Sub
+

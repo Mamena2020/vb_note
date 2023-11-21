@@ -1,0 +1,14 @@
+create macro in : Personal Macro Workbook
+
+count data from top to down=> lastDataRow = dataSheet.Cells(startDataRow, "B").End(xlDown).Row
+count data from bttom to up=> lastDataRow = dataSheet.Cells(dataSheet.Rows.Count, "B").End(xlUp).Row
+
+Enabled Scripting.Dictionary => Collection
+Buka Editor VBA dengan menekan Alt + F11 di Excel.
+Di Editor VBA, pilih menu "Tools" > "References..."
+Di jendela "References," gulir ke bawah dan temukan "Microsoft Scripting Runtime."
+Centang kotak di depan "Microsoft Scripting Runtime" dan klik "OK."
+
+search data if => empty in the middle
+
+
