@@ -1,12 +1,57 @@
-create macro in : Personal Macro Workbook
+# enabling Developer tab
+  1. excel options
+  2. Customize Ribbon
+  3. check main tab devoper
 
-count data from top to down=> lastDataRow = dataSheet.Cells(startDataRow, "B").End(xlDown).Row
-count data from bottom to up (last row cell) => lastDataRow = dataSheet.Cells(dataSheet.Rows.Count, "B").End(xlUp).Row
+# creating new macro without lost data (code)
+  1. create macro in : Personal Macro Workbook
 
-Enabled Scripting.Dictionary => Collection
-1. Open Editor VBA => Alt + F11 di Excel.
-2. Editor VBA, choose "Tools" > "References..."
-3. On "References," search "Microsoft Scripting Runtime." and check box "Microsoft Scripting Runtime" and click "OK."
+# Get last cell
+  1. count data from top to down=> lastDataRow = dataSheet.Cells(startDataRow, "B").End(xlDown).Row
+  2. count data from bttom to up=> lastDataRow = dataSheet.Cells(dataSheet.Rows.Count, "B").End(xlUp).Row
 
+# Using Dictionary Type Data
+  Enabled Scripting.Dictionary 
+   1. Open Editor VBA => Alt + F11 di Excel.
+   2. Editor VBA, choose "Tools" > "References..."
+   3. On "References," search "Microsoft Scripting Runtime." and check box "Microsoft Scripting Runtime" and click "OK."
+   
+  Or using: Set myDictionary = CreateObject("Scripting.Dictionary") => not tested
 
+# Collection
+   1. collection index start from 1
+
+# Function
+
+Function Square(num As Integer) As Integer
+    Square = num * num
+End Function
+
+# Procedure
+
+Sub Main()
+    Dim result As Integer
+    ' Memanggil Function Square
+    result = Square(5)
+    MsgBox "Result square: " & result
+End Sub 
+
+# code example
+
+Function RemoveItemByKeyword(collection As Collection, keyword As String) As Boolean
+    Dim i As Integer
+    
+    ' Iterasi melalui koleksi untuk mencari kata kunci
+    For i = collection.Count To 1 Step -1
+        If InStr(1, collection(i), keyword, vbTextCompare) > 0 Then
+            ' If found data => remove
+            collection.Remove i
+            RemoveItemByKeyword = True
+            Exit Function
+        End If
+    Next i
+    
+    ' data not found
+    RemoveItemByKeyword = False
+End Function
 
