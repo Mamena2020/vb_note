@@ -6,6 +6,10 @@
 # creating new macro without lost data (code)
   1. create macro in : Personal Macro Workbook
 
+# create macro excel 
+  1. file must be with .xlsm extension
+  2. import module in project workbook
+
 # Get last cell
   1. count data from top to down=> lastDataRow = dataSheet.Cells(startDataRow, "B").End(xlDown).Row
   2. count data from bttom to up=> lastDataRow = dataSheet.Cells(dataSheet.Rows.Count, "B").End(xlUp).Row
